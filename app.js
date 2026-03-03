@@ -1,4 +1,4 @@
-﻿const CONFIG_KEYS = {
+const CONFIG_KEYS = {
     PRICES: 'perfumePrices',
     FLACONS: 'flaconCosts',
     VOLUMES: 'flaconVolumes',
