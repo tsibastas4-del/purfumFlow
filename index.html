@@ -220,7 +220,7 @@
                 <textarea id="commentsOrder" rows="2" placeholder="Напр: Скинути реквізити на Вайбер..."
                     style="margin-bottom: 20px;"></textarea>
                 <div
-                    style="background: var(--bg-input); padding: 15px; border-radius: 8px; border: 1px dashed var(--border); margin-bottom: 15px;">
+                    style="background: var(--bg-input); padding: 15px; border-radius: 8px; border: 1px dashed var(--border); margin-bottom: 20px; display: flex; flex-direction: column; gap: 15px;">
                     <div class="grid-2-col">
                         <div>
                             <label>Парфум</label>
@@ -230,8 +230,8 @@
                         </div>
                         <div><label>Об'єм</label><select id="orderFlaconVolume"></select></div>
                     </div>
-                    <button class="btn-warning" style="margin-top: 10px;" onclick="addItemToOrder()"><i
-                            class="fa-solid fa-plus-circle"></i> Додати позицію</button>
+                    <button class="btn-warning" onclick="addItemToOrder()"><i class="fa-solid fa-plus-circle"></i>
+                        Додати позицію</button>
                 </div>
 
                 <div class="table-responsive">
@@ -962,14 +962,18 @@
                         oninput="renderPerfumeSelector()" style="padding-left: 32px; margin-bottom: 0;">
                 </div>
                 <!-- Categories Quick Filters -->
-                <div style="display: flex; gap: 5px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none;">
-                    <button class="filter-chip active" style="padding: 4px 10px; font-size: 0.75rem;"
+                <div style="display: flex; gap: 5px; flex-wrap: wrap; padding-bottom: 5px;">
+                    <button class="filter-chip active"
+                        style="padding: 4px 10px; font-size: 0.75rem; flex: 1; text-align: center; justify-content: center;"
                         onclick="filterPerfumeSelectorCategory('all', this)">Всі</button>
-                    <button class="filter-chip" style="padding: 4px 10px; font-size: 0.75rem;"
+                    <button class="filter-chip"
+                        style="padding: 4px 10px; font-size: 0.75rem; flex: 1; text-align: center; justify-content: center;"
                         onclick="filterPerfumeSelectorCategory('Жіночий', this)">👩 Жіночі</button>
-                    <button class="filter-chip" style="padding: 4px 10px; font-size: 0.75rem;"
+                    <button class="filter-chip"
+                        style="padding: 4px 10px; font-size: 0.75rem; flex: 1; text-align: center; justify-content: center;"
                         onclick="filterPerfumeSelectorCategory('Чоловічий', this)">👨 Чоловічі</button>
-                    <button class="filter-chip" style="padding: 4px 10px; font-size: 0.75rem;"
+                    <button class="filter-chip"
+                        style="padding: 4px 10px; font-size: 0.75rem; flex: 1; text-align: center; justify-content: center;"
                         onclick="filterPerfumeSelectorCategory('Унісекс', this)">🚻 Унісекс</button>
                 </div>
                 <div class="table-responsive" style="flex: 1; overflow-y: auto; margin: 0; min-height: 200px;">

@@ -426,8 +426,8 @@ button:hover:not(:disabled),
     -webkit-backdrop-filter: var(--backdrop);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 24px;
-    margin-bottom: 24px;
+    padding: 20px;
+    margin-bottom: 20px;
     box-shadow: var(--shadow);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -492,6 +492,8 @@ select,
 textarea {
     width: 100%;
     padding: 12px 16px;
+    min-height: 48px;
+    /* Match button min-height */
     border: 1px solid var(--border);
     border-radius: 12px;
     font-size: 1rem;
@@ -581,6 +583,8 @@ button:hover::before {
 
 .btn-sm {
     padding: 8px 14px;
+    min-height: 36px;
+    /* Ensure small buttons are still tappable */
     font-size: 0.85rem;
     width: auto;
     display: inline-flex;
@@ -990,6 +994,18 @@ tr:hover td {
         padding-bottom: max(env(safe-area-inset-bottom), 100px);
     }
 
+    .card {
+        padding: 15px;
+        /* Less padding on small screens to save space */
+        margin-bottom: 15px;
+    }
+
+    .grid-2-col,
+    .grid-3-col {
+        gap: 15px;
+        /* Smaller gap on mobile */
+    }
+
     /* Larger touch targets */
     button,
     .btn-primary,
@@ -1013,19 +1029,16 @@ tr:hover td {
     }
 
     table {
-        min-width: 600px;
+        min-width: 100%;
+        /* Better than fixed 600px min-width */
         font-size: 0.9rem;
     }
 
     th,
     td {
         padding: 12px 8px;
-        white-space: nowrap;
-    }
-
-    /* Allow text wrapping for specific tables like the perfume selector */
-    #perfume-selector-table td {
         white-space: normal;
+        /* Apply wrapping globally on mobile */
         word-break: break-word;
     }
 
