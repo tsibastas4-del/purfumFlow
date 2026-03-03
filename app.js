@@ -384,8 +384,9 @@ window.editPerfume = function (name) {
 }
 window.renderPerfumeList = function () {
     const tbody = document.getElementById('perfume-list-table').getElementsByTagName('tbody')[0];
-    tbody.innerHTML = '';
-    const search = document.getElementById('perfumeSearchInput').value.toLowerCase();
+    const search = (document.getElementById('perfumeSearchInput')?.value || '').toLowerCase();
+
+    const rows = [];
     Object.keys(PERFUME_PRICES).sort().forEach(name => {
         const pData = PERFUME_PRICES[name];
 
@@ -402,8 +403,10 @@ window.renderPerfumeList = function () {
         const seasonBadges = (pData.seasons || []).map(s => `<span class="season-badge">${s === 'Літо' ? '☀️' : '❄️'}</span>`).join('');
         const tagsHtml = (pData.tags || []).map(t => `<span class="tag-badge">${t}</span>`).join('');
 
-        tbody.innerHTML += `<tr><td>${genderBadge}${seasonBadges}<span class="text-bold">${name}</span>${barcodeDisplay}${tagsHtml}</td><td class="text-right">${pData.basePrice.toFixed(2)} ₴</td><td class="text-right"><button class="btn-sm btn-warning" onclick="editPerfume('${name.replace(/'/g, "\\'")}')"><i class="fa-solid fa-edit"></i></button> <button class="btn-sm btn-danger" onclick="deletePerfume('${name.replace(/'/g, "\\'")}')"><i class="fa-solid fa-trash"></i></button></td></tr>`;
+        rows.push(`<tr><td>${genderBadge}${seasonBadges}<span class="text-bold">${name}</span>${barcodeDisplay}${tagsHtml}</td><td class="text-right">${pData.basePrice.toFixed(2)} ₴</td><td class="text-right"><button class="btn-sm btn-warning" onclick="editPerfume('${name.replace(/'/g, "\\'")}')"><i class="fa-solid fa-edit"></i></button> <button class="btn-sm btn-danger" onclick="deletePerfume('${name.replace(/'/g, "\\'")}')"><i class="fa-solid fa-trash"></i></button></td></tr>`);
     });
+
+    tbody.innerHTML = rows.join('');
 }
 window.setCatalogFilter = function (type, value, el) {
     CATALOG_FILTERS[type] = value;
@@ -418,9 +421,10 @@ window.deletePerfume = function (name) {
 }
 window.renderInventoryList = function () {
     const tbody = document.getElementById('inventory-list-table').getElementsByTagName('tbody')[0];
-    tbody.innerHTML = '';
     let lowStockCount = 0;
     const search = (document.getElementById('inventorySearchInput')?.value || '').toLowerCase();
+
+    const rows = [];
     Object.keys(PERFUME_STOCK).sort().forEach(name => {
         const pData = PERFUME_PRICES[name] || {};
         if (STOCK_FILTER_GENDER !== 'all' && pData.gender !== STOCK_FILTER_GENDER) return;
@@ -432,8 +436,10 @@ window.renderInventoryList = function () {
         const genderClass = pData.gender === 'Чоловічий' ? 'gender-male' : (pData.gender === 'Жіночий' ? 'gender-female' : 'gender-unisex');
         const genderBadge = pData.gender ? `<span class="badge-gender ${genderClass}" style="font-size:0.6rem; padding: 1px 4px;">${pData.gender[0]}</span>` : '';
 
-        tbody.innerHTML += `<tr><td>${genderBadge}${name}</td><td class="text-right" ${stock <= 15 ? 'style="color:var(--danger);font-weight:bold;"' : ''}>${stock} мл</td><td class="text-right"><button class="btn-sm btn-danger" onclick="PERFUME_STOCK['${name.replace(/'/g, "\\'")}']=0;saveInventory();renderInventoryList();updateDashboard();"><i class="fa-solid fa-trash"></i></button></td></tr>`;
+        rows.push(`<tr><td>${genderBadge}${name}</td><td class="text-right" ${stock <= 15 ? 'style="color:var(--danger);font-weight:bold;"' : ''}>${stock} мл</td><td class="text-right"><button class="btn-sm btn-danger" onclick="PERFUME_STOCK['${name.replace(/'/g, "\\'")}']=0;saveInventory();renderInventoryList();updateDashboard();"><i class="fa-solid fa-trash"></i></button></td></tr>`);
     });
+
+    tbody.innerHTML = rows.join('');
     const dashLowStock = document.getElementById('dash-low-stock-count-value');
     if (dashLowStock) dashLowStock.textContent = lowStockCount;
 }
@@ -445,11 +451,11 @@ window.renderBottleList = function () {
     const tbodyEl = tbody.getElementsByTagName('tbody')[0];
     if (!tbodyEl) return;
 
-    tbodyEl.innerHTML = '';
+    const rows = [];
 
     Object.keys(BOTTLE_STOCK).sort().forEach(bottleName => {
         const data = BOTTLE_STOCK[bottleName];
-        tbodyEl.innerHTML += `
+        rows.push(`
             <tr>
                 <td>${bottleName}</td>
                 <td>${data.linkedPerfume}</td>
@@ -460,8 +466,10 @@ window.renderBottleList = function () {
                     </button>
                 </td>
             </tr>
-        `;
+        `);
     });
+
+    tbodyEl.innerHTML = rows.join('');
 }
 
 window.addWholeBottle = function () {
