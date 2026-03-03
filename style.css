@@ -1023,6 +1023,12 @@ tr:hover td {
         white-space: nowrap;
     }
 
+    /* Allow text wrapping for specific tables like the perfume selector */
+    #perfume-selector-table td {
+        white-space: normal;
+        word-break: break-word;
+    }
+
     /* Grid single column */
     .grid-2-col {
         grid-template-columns: 1fr !important;

@@ -55,22 +55,24 @@
     <div class="container">
 
         <section id="dashboard" class="content-section active">
-            <h2>👋 Вітаємо! Огляд за сьогодні</h2>
+            <h2>👋 Вітаємо! Огляд результатів</h2>
             <div class="stats-grid">
-                <div class="stat-card">
-                    <h3>Виручка (за весь час)</h3>
-                    <div class="value" id="dash-revenue-value">0 ₴</div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #10b981, #059669);">
+                    <h3>Виручка (Сьогодні)</h3>
+                    <div class="value" id="dash-today-revenue">0 ₴</div>
                 </div>
-                <div class="stat-card green">
-                    <h3>Чистий прибуток</h3>
-                    <div class="value" id="dash-net-profit-value">0 ₴</div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #7c3aed, #6d28d9);">
+                    <h3>Виручка (Цей місяць)</h3>
+                    <div class="value" id="dash-month-revenue">0 ₴</div>
                 </div>
                 <div class="stat-card" style="background: linear-gradient(135deg, #F59E0B, #D97706);">
-                    <h3>Замовлень</h3>
-                    <div class="value" id="dash-orders-value">0</div>
+                    <h3>Замовлень (Місяць)</h3>
+                    <div class="value" id="dash-month-orders">0</div>
                 </div>
-                <div class="stat-card danger" id="dash-low-stock-count">
-                    <h3>Низький Запас</h3>
+                <div class="stat-card danger" id="dash-low-stock-count"
+                    onclick="document.getElementById('inventorySearchInput').focus(); showSection('admin-panel', document.querySelectorAll('.nav-btn')[6]);"
+                    style="cursor: pointer;" title="Перейти до складу">
+                    <h3>Залишок ≤ 15 мл</h3>
                     <div class="value" id="dash-low-stock-count-value">0</div>
                 </div>
             </div>

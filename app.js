@@ -1149,18 +1149,30 @@ let sourcesChartInstance = null;
 
 window.updateDashboard = function () {
     const txs = getTransactions();
-    const exps = getExpenses();
 
-    // Update stat cards
-    const totalRevenue = txs.reduce((sum, t) => sum + t.revenue, 0);
-    const totalProfit = txs.reduce((sum, t) => sum + (t.profit || 0), 0);
-    const totalExpenses = exps.reduce((sum, e) => sum + e.amount, 0);
-    const netProfit = totalProfit - totalExpenses;
-    const lowStockCount = Object.values(PERFUME_STOCK).filter(stock => stock < 50).length;
+    const now = new Date();
+    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
 
-    document.getElementById('dash-revenue-value').textContent = totalRevenue.toFixed(0) + ' ₴';
-    document.getElementById('dash-net-profit-value').textContent = netProfit.toFixed(0) + ' ₴';
-    document.getElementById('dash-orders-value').textContent = txs.length;
+    let todayRevenue = 0;
+    let monthRevenue = 0;
+    let monthOrders = 0;
+
+    txs.forEach(t => {
+        if (t.timestamp >= startOfToday) {
+            todayRevenue += t.revenue;
+        }
+        if (t.timestamp >= startOfMonth) {
+            monthRevenue += t.revenue;
+            monthOrders++;
+        }
+    });
+
+    const lowStockCount = Object.values(PERFUME_STOCK).filter(stock => stock <= 15).length;
+
+    document.getElementById('dash-today-revenue').textContent = todayRevenue.toFixed(0) + ' ₴';
+    document.getElementById('dash-month-revenue').textContent = monthRevenue.toFixed(0) + ' ₴';
+    document.getElementById('dash-month-orders').textContent = monthOrders;
     document.getElementById('dash-low-stock-count-value').textContent = lowStockCount;
 
     // Render all charts
